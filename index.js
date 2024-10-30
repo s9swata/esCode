@@ -95,53 +95,46 @@ app.get('/me', auth, (req, res) => {
 app.post('/submission', auth, async (req, res) => {
     const isCorrect = Math.random() < 0.5;
     const { lang_id, problemId, submission } = req.body;
-
     const fs = require('node:fs');
-
-    const content = submission;
-
-    var output = "";
-
-    try {
-        fs.writeFileSync('./sandbox/my_code.c', content);
-        console.log('file written');
-        // file written successfully
-    } catch (err) {
-        console.error(err);
-    }
-
+    const path = require('path');
     const { spawn } = require('node:child_process');
-    const ls = await spawn('./script.sh', {
-	    cwd: '/home/ubuntu/esCode-backend/sandbox/' 
+    
+    try{
+        const submissionId = `${req.userId}_${Date.now()}`;
+        const submissionDir = path.join(__dirname, `../problems/${problemId}/submissions`, submissionId);
+        await fs.mkdir(submissionDir);
+        const filePath = path.join(submissionDir, 'my_code.c');
 
-    });
- 
-    ls.stderr.on('data', (data) => {
-        console.error(`stderr: ${data}`);
-        })
+        await fs.writeFile(filePath, submission);
+        console.log('File written');
 
-    ls.stdout.on('data', (data) => {
-        console.log(`stdout: ${data}`);
-	output = output.concat(data);
+        let output = "";
+        const process = spawn('../script.sh', {cwd : submissionDir});
+
+        process.stdout.on('data', (data) => {
+            output += data.toString();
         });
 
-    ls.on('close', (code) => {
-        console.log(`child process exited with code ${code}`);
-	const status = isCorrect ? "AC" : "WA";
-	SUBMISSIONS.push({
-            problemId,
-            userId: req.userId,
-            submission,
-            status: status
+        process.stderr.on('data', (data) => {
+            console.error(`Error: ${data}`);
+        })
 
-        	});
-	return res.json({
-		status: status,
-		output: output
-		});
-
-	})
-})
+        process.on('close', async code => {
+            const status = code === 0 ? "AC" : "WA";
+            SUBMISSIONS.push({
+                problemId,
+                userId: req.userId,
+                submission,
+                status
+            })
+            await fs.rm(submissionDir, {recursive: true, force: true});
+            res.json({status: output});
+        })
+    }catch(err){
+        console.error('Error in submission', err);
+        res.status(500).json({msg: "Error processing submission"});
+    }
+});
 
 
 app.get('/submissions/:problemId', auth, (req, res) => {
