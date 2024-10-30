@@ -111,11 +111,17 @@ app.post('/submission', auth, async (req, res) => {
 			console.log("Directory created successfully");
 		}
 	});
-        const filePath = path.join(submissionDir, 'my_code.c');
+    const filePath = path.join(submissionDir, 'my_code.c');
 	const newScriptPath = path.join(submissionDir, 'script.sh');
 	const newInputPath = path.join(submissionDir, 'input.txt');
-	await fs.copyFile(oldScriptPath, newScriptPath);
-	await fs.copyFile(oldInputPath, newInputPath);
+
+    function callback(err) {
+        if (err) throw err;
+        console.log('source.txt was copied to destination.txt');
+      }
+
+	await fs.copyFile(oldScriptPath, newScriptPath, callback);
+	await fs.copyFile(oldInputPath, newInputPath, callback);
 	await fs.writeFile(filePath, JSON.stringify(submission), (err) => err && console.error(err));
 
         let output = "";
