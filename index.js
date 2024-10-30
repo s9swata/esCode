@@ -127,29 +127,20 @@ app.post('/submission', auth, async (req, res) => {
 
     ls.on('close', (code) => {
         console.log(`child process exited with code ${code}`);
-        });
-
-
-    if (isCorrect){
-        SUBMISSIONS.push({
+	const status = isCorrect ? "AC" : "WA";
+	SUBMISSIONS.push({
             problemId,
             userId: req.userId,
             submission,
-            status: "AC"
-    });
-        return res.json({status: "AC",
-			output: output});
-    }
-    else{
-        SUBMISSIONS.push({
-            problemId,
-            userId: req.userId,
-            submission,
-            status: "WA"
-    });
-        return res.json({status: "WA",
-			output: output});
-    }
+            status: status
+
+        	});
+	return res.json({
+		status: status,
+		output: output
+		});
+
+	})
 })
 
 
