@@ -92,13 +92,15 @@ app.get('/me', auth, (req, res) => {
     return res.json({ user })
 })
 
-app.post('/submission', auth, (req, res) => {
+app.post('/submission', auth, async (req, res) => {
     const isCorrect = Math.random() < 0.5;
     const { lang_id, problemId, submission } = req.body;
 
     const fs = require('node:fs');
 
     const content = submission;
+
+    var output = "";
 
     try {
         fs.writeFileSync('./sandbox/my_code.c', content);
@@ -108,13 +110,27 @@ app.post('/submission', auth, (req, res) => {
         console.error(err);
     }
 
-    const { execFile } = require('node:child_process');
-    const child = execFile('./sandbox/script.sh', (error, stdout, stderr) => {
-    if (error) {
-        throw error;
-    }
-    console.log(stdout);
+    const { spawn } = require('node:child_process');
+    const ls = await spawn('./script.sh', {
+	    cwd: '/home/ubuntu/esCode-backend/sandbox/' 
+
     });
+
+    
+    ls.stderr.on('data', (data) => {
+        console.error(`stderr: ${data}`);
+        })
+
+    ls.stdout.on('data', (data) => {
+        console.log(`stdout: ${data}`);
+	output = data;
+        });
+
+
+
+    ls.on('close', (code) => {
+        console.log(`child process exited with code ${code}`);
+        });
 
 
     if (isCorrect){
@@ -124,7 +140,8 @@ app.post('/submission', auth, (req, res) => {
             submission,
             status: "AC"
     });
-        return res.json({status: "AC"});
+        return res.json({status: "AC",
+			output: output});
     }
     else{
         SUBMISSIONS.push({
@@ -133,7 +150,8 @@ app.post('/submission', auth, (req, res) => {
             submission,
             status: "WA"
     });
-        return res.json({status: "WA"});
+        return res.json({status: "WA",
+			output: output});
     }
 })
 
