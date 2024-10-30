@@ -101,7 +101,7 @@ app.post('/submission', auth, (req, res) => {
     const content = submission;
 
     try {
-        fs.writeFileSync('./c_sandbox/my_code.c', content);
+        fs.writeFileSync('./sandbox/my_code.c', content);
         console.log('file written');
         // file written successfully
     } catch (err) {
@@ -109,7 +109,7 @@ app.post('/submission', auth, (req, res) => {
     }
 
     const { execFile } = require('node:child_process');
-    const child = execFile('./c_sandbox/script.sh', (error, stdout, stderr) => {
+    const child = execFile('./sandbox/script.sh', (error, stdout, stderr) => {
     if (error) {
         throw error;
     }
