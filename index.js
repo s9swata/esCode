@@ -100,16 +100,26 @@ app.post('/submission', auth, async (req, res) => {
     const { spawn } = require('node:child_process');
     
     try{
+	const oldScriptPath = path.join(__dirname, 'sandbox', 'script.sh');
+	const oldInputPath = path.join(__dirname, 'sandbox', 'input.txt');
         const submissionId = `${req.userId}_${Date.now()}`;
         const submissionDir = path.join(__dirname, `../problems/${problemId}/submissions`, submissionId);
-        await fs.mkdir(submissionDir);
+        await fs.mkdir(submissionDir, {recursive: true}, (err) => {
+		if(err){
+			console.error("Directory creation failed");
+		}else{
+			console.log("Directory created successfully");
+		}
+	});
         const filePath = path.join(submissionDir, 'my_code.c');
-
-        await fs.writeFile(filePath, submission);
-        console.log('File written');
+	const newScriptPath = path.join(submissionDir, 'script.sh');
+	const newInputPath = path.join(submissionDir, 'input.txt');
+	await fs.copyFile(oldScriptPath, newScriptPath);
+	await fs.copyFile(oldInputPath, newInputPath);
+	await fs.writeFile(filePath, JSON.stringify(submission), (err) => err && console.error(err));
 
         let output = "";
-        const process = spawn('../script.sh', {cwd : submissionDir});
+        const process = spawn(`../problems/${problemId}/submissions/${submissionId}/script.sh`, {cwd : submissionDir});
 
         process.stdout.on('data', (data) => {
             output += data.toString();
