@@ -76,7 +76,7 @@ app.post('/login', (req, res) => {
     }
 
     const token = jwt.sign({
-        id: user.id
+        id: user.id 
     }, JWT_SECRET);
 
     return res.json(token);
@@ -94,8 +94,28 @@ app.get('/me', auth, (req, res) => {
 
 app.post('/submission', auth, (req, res) => {
     const isCorrect = Math.random() < 0.5;
-    const problemId = req.body.problemId;
-    const submission = req.body.submission;
+    const { lang_id, problemId, submission } = req.body;
+
+    const fs = require('node:fs');
+
+    const content = submission;
+
+    try {
+        fs.writeFileSync('./c_sandbox/my_code.c', content);
+        console.log('file written');
+        // file written successfully
+    } catch (err) {
+        console.error(err);
+    }
+
+    const { execFile } = require('node:child_process');
+    const child = execFile('./c_sandbox/script.sh', (error, stdout, stderr) => {
+    if (error) {
+        throw error;
+    }
+    console.log(stdout);
+    });
+
 
     if (isCorrect){
         SUBMISSIONS.push({
