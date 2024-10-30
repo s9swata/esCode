@@ -115,18 +115,15 @@ app.post('/submission', auth, async (req, res) => {
 	    cwd: '/home/ubuntu/esCode-backend/sandbox/' 
 
     });
-
-    
+ 
     ls.stderr.on('data', (data) => {
         console.error(`stderr: ${data}`);
         })
 
     ls.stdout.on('data', (data) => {
         console.log(`stdout: ${data}`);
-	output = data;
+	output = output.concat(data);
         });
-
-
 
     ls.on('close', (code) => {
         console.log(`child process exited with code ${code}`);
