@@ -93,21 +93,31 @@ app.get('/me', auth, (req, res) => {
 })
 
 app.post('/submission', auth, async (req, res) => {
+	
+    console.log("Generating submission request...");
 
-    const { lang_id, problemId, submission } = req.body;
+    const source_code = req.body.submission;
+    const lang_id = req.body.lang_id;
+    const problemId = req.body.problemId;
     const problem = PROBLEMS.find(problem => problem.problemId === problemId);
     const stdin = problem.stdin;
     const stdout = problem.stdout;
 
-    const token = await fetch('http://localhost:2358/submissions/?base64_encoded=false&wait=false', {
+    const submissionResponse = await fetch('http://localhost:2358/submissions/?base64_encoded=false&wait=false', {
         method: "POST",
+	headers: {
+		"Content-Type": "application/json"
+	},
         body: JSON.stringify({
-            source_code: submission,
+            source_code: source_code,
             language_id: lang_id,
             stdin: stdin,
             expected_output: stdout
         })
-    }).token;
+    });
+    
+    const submissionData = await submissionResponse.json();
+    const token = submissionData.token;
 
     console.log(token);
 
@@ -115,16 +125,17 @@ app.post('/submission', auth, async (req, res) => {
         method: "GET"
     })
 
-    console.log(result);
+    const resultJson = await result.json();
+    console.log(resultJson);
 
-    const status_id = result.status_id;
+    const status_id = resultJson.status_id;
     console.log(status_id);
     const status = status_id === 3 ? "accepted" : "rejected";
 
     SUBMISSIONS.push({
         problemId,
         userId : req.userId,
-        submission,
+        submission: source_code,
         status,
         time: new Date()
     })
@@ -144,4 +155,5 @@ app.get('/submissions/:problemId', auth, (req, res) => {
 app.listen(PORT, () => {
     console.log(`Server started on ${PORT}`);
 });
+
 
