@@ -93,63 +93,41 @@ app.get('/me', auth, (req, res) => {
 })
 
 app.post('/submission', auth, async (req, res) => {
-    const isCorrect = Math.random() < 0.5;
+
     const { lang_id, problemId, submission } = req.body;
-    const fs = require('node:fs');
-    const path = require('path');
-    const { spawn } = require('node:child_process');
-    
-    try{
-	const oldScriptPath = path.join(__dirname, 'sandbox', 'script.sh');
-	const oldInputPath = path.join(__dirname, 'sandbox', 'input.txt');
-        const submissionId = `${req.userId}_${Date.now()}`;
-        const submissionDir = path.join(__dirname, `../problems/${problemId}/submissions`, submissionId);
-        await fs.mkdir(submissionDir, {recursive: true}, (err) => {
-		if(err){
-			console.error("Directory creation failed");
-		}else{
-			console.log("Directory created successfully");
-		}
-	});
-    const filePath = path.join(submissionDir, 'my_code.c');
-	const newScriptPath = path.join(submissionDir, 'script.sh');
-	const newInputPath = path.join(submissionDir, 'input.txt');
+    const problem = PROBLEMS.find(problem => problem.problemId === problemId);
+    const stdin = problem.stdin;
+    const stdout = problem.stdout;
 
-    function callback(err) {
-        if (err) throw err;
-        console.log('source.txt was copied to destination.txt');
-      }
-
-	await fs.copyFile(oldScriptPath, newScriptPath, callback);
-	await fs.copyFile(oldInputPath, newInputPath, callback);
-	await fs.writeFile(filePath, JSON.stringify(submission), (err) => err && console.error(err));
-
-        let output = "";
-        const process = spawn(`../problems/${problemId}/submissions/${submissionId}/script.sh`, {cwd : submissionDir});
-
-        process.stdout.on('data', (data) => {
-            output += data.toString();
-        });
-
-        process.stderr.on('data', (data) => {
-            console.error(`Error: ${data}`);
+    const token = await fetch('http://localhost:2358/submissions/?base64_encoded=false&wait=false', {
+        method: "POST",
+        body: JSON.stringify({
+            source_code: submission,
+            language_id: lang_id,
+            stdin: stdin,
+            expected_output: stdout
         })
+    }).token;
 
-        process.on('close', async code => {
-            const status = code === 0 ? "AC" : "WA";
-            SUBMISSIONS.push({
-                problemId,
-                userId: req.userId,
-                submission,
-                status
-            })
-            await fs.rm(submissionDir, {recursive: true, force: true});
-            res.json({status: output});
-        })
-    }catch(err){
-        console.error('Error in submission', err);
-        res.status(500).json({msg: "Error processing submission"});
-    }
+    console.log(token);
+
+    const result = await fetch(`http://localhost:2358/submissions/${token}?base64_encoded=false&fields=stdout,stderr,status_id,language_id`, {
+        method: "GET"
+    })
+
+    console.log(result);
+
+    const status_id = result.status_id;
+    console.log(status_id);
+    const status = status_id === 3 ? "accepted" : "rejected";
+
+    SUBMISSIONS.push({
+        problemId,
+        userId : req.userId,
+        submission,
+        status,
+        time: new Date()
+    })
 });
 
 
