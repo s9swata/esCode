@@ -1,6 +1,7 @@
 const express = require('express');
 const app = express();
 const PORT = 3000;
+const PATH = "http://13.56.177.109:2358";
 const { auth } = require('./middleware');
 const jwt = require('jsonwebtoken');
 const JWT_SECRET = "secret";
@@ -81,7 +82,7 @@ app.post('/submission', auth, async (req, res) => {
 
         const { stdin, stdout } = problem;
 
-        const submissionResponse = await fetch('http://localhost:2358/submissions/?base64_encoded=false&wait=false', {
+        const submissionResponse = await fetch(`${PATH}/submissions/?base64_encoded=false&wait=false`, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ source_code, language_id: lang_id, stdin, expected_output: stdout })
@@ -89,7 +90,7 @@ app.post('/submission', auth, async (req, res) => {
 
         const { token } = await submissionResponse.json();
 
-        const result = await fetch(`http://localhost:2358/submissions/${token}?base64_encoded=false&fields=stdout,stderr,status_id,language_id`, {
+        const result = await fetch(`${PATH}/submissions/${token}?base64_encoded=false&fields=stdout,stderr,status_id,language_id`, {
             method: "GET"
         });
 
