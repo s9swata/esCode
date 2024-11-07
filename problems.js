@@ -147,7 +147,7 @@ const Problems = [
       ],
       "sampleOutput": "For the input s = 'aa' and p = 'a*', the function should return true because '*' means zero or more of the preceding element, 'a'. Therefore, by repeating 'a' once, it becomes 'aa'",
       "stdin": [['aa', 'a'], ['aa', 'a*'], ['ab', '.*']],
-      "stdout": ['false\n', 'true\n', 'true\n']
+      "stdout": ['False\n', 'True\n', 'True\n']
     }
   ];
 
