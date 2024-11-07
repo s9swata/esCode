@@ -49,7 +49,7 @@ const Problems = [
       "title": "Median of Two Sorted Arrays",
       "acceptance": "41.5%",
       "difficulty": "Hard",
-      "description": "Given two sorted arrays nums1 and nums2 of size m and n respectively, return the median of the two sorted arrays. Print upto 5 decimal places",
+      "description": "Given two sorted arrays nums1 and nums2 of size m and n respectively, return the median of the two sorted arrays. Print upto 2 decimal places",
       "testCases": [
         { "input": "nums1 = [1,3], nums2 = [2]", "output": "2.00000" },
         { "input": "nums1 = [1,2], nums2 = [3,4]", "output": "2.50000" },
