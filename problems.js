@@ -11,8 +11,8 @@ const Problems = [
         { "input": "nums = [3,3], target = 6", "output": "[0,1]" }
       ],
       "sampleOutput": "For the input nums = [2,7,11,15] and target = 9, the function should return [0,1] because nums[0] + nums[1] == 9",
-      "stdin": [["3", "5"]],
-      "stdout": ["8\n"]
+      "stdin": [["[2,7,11,15]", "9"],["[3,2,4]", "6"],["[3,3]", "6"]],
+      "stdout": ["[0,1]\n", "[1,2]\n", "[0,1]\n"]
     },
     {
       "problemId": "2",
