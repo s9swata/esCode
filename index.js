@@ -81,6 +81,7 @@ app.post('/submission', auth, async (req, res) => {
     console.log(inputs)
 
     let testCasesPassed = 0;
+    let failedCases = [];
 
     for(let i=0; i < inputs.length; i++){
 
@@ -103,6 +104,7 @@ app.post('/submission', auth, async (req, res) => {
         if(output.output === expected_output){
             testCasesPassed++;
         }else{
+            failedCases.push(i);
             console.log(`Test case ${i+1} failed`);
         }
     
@@ -117,7 +119,7 @@ app.post('/submission', auth, async (req, res) => {
         time: new Date()
     }))
     
-    return res.json({test_cases_passed: testCasesPassed});
+    return res.json({failedCases: failedCases});
 
 });
 
