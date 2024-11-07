@@ -4,15 +4,15 @@ const Problems = [
       "title": "Two Sum",
       "acceptance": "53.8%",
       "difficulty": "Easy",
-      "description": "Given an array of integers nums and an integer target, return indices of the two numbers such that they add up to target.",
+      "description": "Given an array of integers nums and an integer target, return indices of the two numbers such that they add up to target. Use eval to pass the lists in python.",
       "testCases": [
         { "input": "nums = [2,7,11,15], target = 9", "output": "[0,1]" },
         { "input": "nums = [3,2,4], target = 6", "output": "[1,2]" },
         { "input": "nums = [3,3], target = 6", "output": "[0,1]" }
       ],
       "sampleOutput": "For the input nums = [2,7,11,15] and target = 9, the function should return [0,1] because nums[0] + nums[1] == 9",
-      "stdin": [["[2,7,11,15]", "9"],["[3,2,4]", "6"],["[3,3]", "6"]],
-      "stdout": ["[0,1]\n", "[1,2]\n", "[0,1]\n"]
+      "stdin": [["[2,7,11,15]", "9"],["[-1,-2,-3,-4,1]", "-5"],["[3,3]", "6"], ["[1,2,3,4]","10"], ["[1000000,500000,250000]", "1500000"]],
+      "stdout": ["[0, 1]\n", "[1, 3]\n", "[0, 1]\n", "[]\n", "[0, 1]\n"]
     },
     {
       "problemId": "2",
@@ -21,13 +21,13 @@ const Problems = [
       "difficulty": "Medium",
       "description": "You are given two non-empty linked lists representing two non-negative integers. The digits are stored in reverse order, and each of their nodes contains a single digit. Add the two numbers and return the sum as a linked list.",
       "testCases": [
-        { "input": "1 = [2,4,3], l2 = [5,6,4]", "output": "[7,0,8]" },
-        { "input": "1 = [0], l2 = [0]", "output": "[0]" },
-        { "input": "1 = [9,9,9,9], l2 = [9,9,9,9,9,9,9]", "output": "[8,9,9,9,0,0,0,1]" }
+        { "input": "L1 = [2,4,3], L2 = [5,6,4]", "output": "[7,0,8]" },
+        { "input": "L1 = [0], L2 = [0]", "output": "[0]" },
+        { "input": "L1 = [9,9,9,9], L2 = [9,9,9,9,9,9,9]", "output": "[8,9,9,9,0,0,0,1]" }
       ],
       "sampleOutput": "For the input l1 = [2,4,3] and l2 = [5,6,4], the function should return [7,0,8] because 342 + 465 = 807",
-      "stdin": "3 5\n10 15\n2 3",
-      "stdout": "8\n25\n5"
+      "stdin": [["[2,4,3]", "[5,6,4]"],["[0]","[0]"],["[9,9,9,9]","[9,9,9,9,9,9,9]"],["[9,9]","[1]"],["[9,9,9]","[1]"]],
+      "stdout": ["[7, 0, 8]\n","[0]\n","[8, 9, 9, 9, 9, 0, 0, 0, 1]\n","[0, 0, 1]\n","[0, 0, 0, 1]\n"]
     },
     {
       "problemId": "3",
@@ -41,23 +41,23 @@ const Problems = [
         { "input": "s = 'pwwkew'", "output": "3" }
       ],
       "sampleOutput": "For the input s = 'abcabcbb', the function should return 3 because the longest substring without repeating characters is 'abc'",
-      "stdin": "3 5\n10 15\n2 3",
-      "stdout": "8\n25\n5"
+      "stdin": [['abcabcbb'],['bbbb'],['pwwkew'],['aaaaaa'],['abcABC!@#']],
+      "stdout": ['3\n','1\n','3\n','1\n','9\n']
     },
     {
       "problemId": "4",
       "title": "Median of Two Sorted Arrays",
       "acceptance": "41.5%",
       "difficulty": "Hard",
-      "description": "Given two sorted arrays nums1 and nums2 of size m and n respectively, return the median of the two sorted arrays.",
+      "description": "Given two sorted arrays nums1 and nums2 of size m and n respectively, return the median of the two sorted arrays. Print upto 5 decimal places",
       "testCases": [
         { "input": "nums1 = [1,3], nums2 = [2]", "output": "2.00000" },
         { "input": "nums1 = [1,2], nums2 = [3,4]", "output": "2.50000" },
         { "input": "nums1 = [0,0], nums2 = [0,0]", "output": "0.00000" }
       ],
       "sampleOutput": "For the input nums1 = [1,3] and nums2 = [2], the function should return 2.00000 because the median of the combined sorted array [1,2,3] is 2",
-      "stdin": "3 5\n10 15\n2 3",
-      "stdout": "8\n25\n5"
+      "stdin": [["[1,3]","[2]"], ["[1,2]","[3,4]"], ["[0,0]","[0,0]"], ["[1]","[2]"], ["[1,2,3]","[100,200,300]"]],
+      "stdout": ["2.00000\n", "2.50000\n", "0.00000\n", "1.50000\n", "51.50000\n"]
     },
     {
       "problemId": "5",
@@ -66,13 +66,13 @@ const Problems = [
       "difficulty": "Medium",
       "description": "Given a string s, return the longest palindromic substring in s.",
       "testCases": [
-        { "input": "s = 'babad'", "output": "'bab'" },
-        { "input": "s = 'cbbd'", "output": "'bb'" },
-        { "input": "s = 'a'", "output": "'a'" }
+        { "input": "s = 'babad'", "output": "bab" },
+        { "input": "s = 'cbbd'", "output": "bb" },
+        { "input": "s = 'a'", "output": "a" }
       ],
       "sampleOutput": "For the input s = 'babad', the function should return 'bab' (or 'aba') as it is the longest palindromic substring",
-      "stdin": "3 5\n10 15\n2 3",
-      "stdout": "8\n25\n5"
+      "stdin": [['babad'], ['cbbd'], ['a'], ['abcde'], ['racecar']],
+      "stdout": ['bab\n', 'bb\n', 'a\n', 'a\n', 'racecar\n']
     },
     {
       "problemId": "6",
@@ -86,8 +86,8 @@ const Problems = [
         { "input": "s = 'A', numRows = 1", "output": "'A'" }
       ],
       "sampleOutput": "For the input s = 'PAYPALISHIRING' and numRows = 3, the function should return 'PAHNAPLSIIGYIR'",
-      "stdin": "3 5\n10 15\n2 3",
-      "stdout": "8\n25\n5"
+      "stdin": [['PAYPALISHIRING', '3'], ['PAYPALISHIRING', '4'], ['A', '1']],
+      "stdout": ['PAHNAPLSIIGYIR\n', 'PINALSIGYAHRPI\n', 'A\n']
     },
     {
       "problemId": "7",
@@ -101,8 +101,8 @@ const Problems = [
         { "input": "x = 120", "output": "21" }
       ],
       "sampleOutput": "For the input x = 123, the function should return 321",
-      "stdin": "3 5\n10 15\n2 3",
-      "stdout": "8\n25\n5"
+      "stdin": [['123'], ['-123'], ['120'], ['1534236469'], ['0']],
+      "stdout": ['321\n', '-321\n', '21\n', '0\n', '0\n']
     },
     {
       "problemId": "8",
@@ -116,8 +116,8 @@ const Problems = [
         { "input": "s = '4193 with words'", "output": "4193" }
       ],
       "sampleOutput": "For the input s = '42', the function should return 42",
-      "stdin": "3 5\n10 15\n2 3",
-      "stdout": "8\n25\n5"
+      "stdin": [['42'], ['   -42'], ['4193 with words']],
+      "stdout": ["42\n", "-42\n", "4193\n"]
     },
     {
       "problemId": "9",
@@ -146,8 +146,8 @@ const Problems = [
         { "input": "s = 'ab', p = '.*'", "output": "true" }
       ],
       "sampleOutput": "For the input s = 'aa' and p = 'a*', the function should return true because '*' means zero or more of the preceding element, 'a'. Therefore, by repeating 'a' once, it becomes 'aa'",
-      "stdin": "3 5\n10 15\n2 3",
-      "stdout": "8\n25\n5"
+      "stdin": [['aa', 'a'], ['aa', 'a*'], ['ab', '.*']],
+      "stdout": ['false\n', 'true\n', 'true\n']
     }
   ];
 
