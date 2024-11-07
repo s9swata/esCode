@@ -1,7 +1,6 @@
 const express = require('express');
 const app = express();
 const PORT = 3000;
-const PATH = "http://13.56.177.109:2358";
 const { auth } = require('./middleware');
 const jwt = require('jsonwebtoken');
 const JWT_SECRET = "secret";
@@ -72,38 +71,47 @@ app.get('/me', auth, (req, res) => {
 });
 
 app.post('/submission', auth, async (req, res) => {
-    try {
-        const { submission: source_code, lang_id, problemId } = req.body;
-        const problem = PROBLEMS.find(problem => problem.problemId === problemId);
+    
+    const code = req.body.submission;
+    const problemId = req.body.problemId;
 
-        if (!problem) {
-            return res.status(404).json({ msg: "Problem not found" });
-        }
+    const problem = PROBLEMS.find(problem => problem.problemId === problemId);
+    const inputs = problem.stdin;
 
-        const { stdin, stdout } = problem;
+    console.log(inputs);
 
-        const submissionResponse = await fetch(`${PATH}/submissions/?base64_encoded=false&wait=false`, {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ source_code, language_id: lang_id, stdin, expected_output: stdout })
-        });
+    const submit = await fetch('https://j2gra3n3eb.execute-api.us-west-1.amazonaws.com/prod', {
+        method: "POST",
+        body: JSON.stringify({
+            code: code,
+            inputs: inputs
+        })
+    })
 
-        const { token } = await submissionResponse.json();
+    console.log('request submitted');
 
-        const result = await fetch(`${PATH}/submissions/${token}?base64_encoded=false&fields=stdout,stderr,status_id,language_id`, {
-            method: "GET"
-        });
+    const output = await submit.json();
 
-        const resultJson = await result.json();
-        const status = resultJson.status_id === 3 ? "accepted" : "rejected";
+    const expected_output = problem.stdout;
 
-        SUBMISSIONS.push({ problemId, userId: req.userId, submission: source_code, status, time: new Date() });
-
-        res.json({ msg: "Submission recorded", status });
-    } catch (error) {
-        console.error("Submission error:", error);
-        res.status(500).json({ msg: "Error processing submission" });
+    if(output){
+        SUBMISSIONS.push(JSON.stringify({
+            problemId,
+            code,
+            output,
+            time: new Date()
+        }))
     }
+
+    let success = "";
+    if(output.output === expected_output){
+        success = "success"
+    }else{
+        success = "failed"
+    }
+
+    return res.json({msg: success});
+
 });
 
 app.get('/submissions/:problemId', auth, (req, res) => {
