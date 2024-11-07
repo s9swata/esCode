@@ -57,7 +57,7 @@ const Problems = [
       ],
       "sampleOutput": "For the input nums1 = [1,3] and nums2 = [2], the function should return 2.00000 because the median of the combined sorted array [1,2,3] is 2",
       "stdin": [["[1,3]","[2]"], ["[1,2]","[3,4]"], ["[0,0]","[0,0]"], ["[1]","[2]"], ["[1,2,3]","[100,200,300]"]],
-      "stdout": ["2.00000\n", "2.50000\n", "0.00000\n", "1.50000\n", "51.50000\n"]
+      "stdout": ["2.00\n", "2.50\n", "0.00\n", "1.50\n", "51.50\n"]
     },
     {
       "problemId": "5",
