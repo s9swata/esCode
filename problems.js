@@ -11,8 +11,8 @@ const Problems = [
         { "input": "nums = [3,3], target = 6", "output": "[0,1]" }
       ],
       "sampleOutput": "For the input nums = [2,7,11,15] and target = 9, the function should return [0,1] because nums[0] + nums[1] == 9",
-      "stdin": ["3", "5"],
-      "stdout": "8\n"
+      "stdin": [["3", "5"]],
+      "stdout": ["8\n"]
     },
     {
       "problemId": "2",
@@ -124,15 +124,15 @@ const Problems = [
       "title": "Palindrome Number",
       "acceptance": "55.3%",
       "difficulty": "Easy",
-      "description": "Given an integer x, return true if x is palindrome integer. An integer is a palindrome when it reads the same backward as forward.",
+      "description": "Given an integer x, return x if x is palindrome integer. An integer is a palindrome when it reads the same backward as forward.",
       "testCases": [
         { "input": "x = 121", "output": "true" },
         { "input": "x = -121", "output": "false" },
         { "input": "x = 10", "output": "false" }
       ],
       "sampleOutput": "For the input x = 121, the function should return true because 121 reads as 121 from left to right and from right to left",
-      "stdin": "3 5\n10 15\n2 3",
-      "stdout": "8\n25\n5"
+      "stdin": [['121'], ['1230321'], ['123'], ['4554'], ['-11']],
+      "stdout": ['121\n', '1230321\n', '\n', '4554\n', '\n']
     },
     {
       "problemId": "10",

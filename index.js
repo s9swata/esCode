@@ -78,39 +78,46 @@ app.post('/submission', auth, async (req, res) => {
     const problem = PROBLEMS.find(problem => problem.problemId === problemId);
     const inputs = problem.stdin;
 
-    console.log(inputs);
+    console.log(inputs)
 
-    const submit = await fetch('https://j2gra3n3eb.execute-api.us-west-1.amazonaws.com/prod', {
-        method: "POST",
-        body: JSON.stringify({
-            code: code,
-            inputs: inputs
+    let testCasesPassed = 0;
+
+    for(let i=0; i < inputs.length; i++){
+
+        element = inputs[i];
+
+        const submit = await fetch('https://j2gra3n3eb.execute-api.us-west-1.amazonaws.com/prod', {
+            method: "POST",
+            body: JSON.stringify({
+                code: code,
+                inputs: element
+            })
         })
-    })
+    
+        console.log('request submitted');
 
-    console.log('request submitted');
+        const output = await submit.json();
+        const expected_output = problem.stdout[i];
+        console.log(output);
 
-    const output = await submit.json();
+        if(output.output === expected_output){
+            testCasesPassed++;
+        }else{
+            console.log(`Test case ${i+1} failed`);
+        }
+    
+    };
 
-    const expected_output = problem.stdout;
+    console.log(testCasesPassed);
 
-    if(output){
-        SUBMISSIONS.push(JSON.stringify({
-            problemId,
-            code,
-            output,
-            time: new Date()
-        }))
-    }
-
-    let success = "";
-    if(output.output === expected_output){
-        success = "success"
-    }else{
-        success = "failed"
-    }
-
-    return res.json({msg: success});
+    SUBMISSIONS.push(JSON.stringify({
+        problemId,
+        code,
+        testCasesPassed,
+        time: new Date()
+    }))
+    
+    return res.json({test_cases_passed: testCasesPassed});
 
 });
 
