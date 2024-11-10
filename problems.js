@@ -26,8 +26,8 @@ const Problems = [
         { "input": "L1 = [9,9,9,9], L2 = [9,9,9,9,9,9,9]", "output": "[8,9,9,9,0,0,0,1]" }
       ],
       "sampleOutput": "For the input l1 = [2,4,3] and l2 = [5,6,4], the function should return [7,0,8] because 342 + 465 = 807",
-      "stdin": ["2\n4\n3\n5\n6\n4","0\n0","9\n9\n9\n9\n9\n9\n9\n9\n9\n9\n9\n9\n9","[1]"],["[9,9,9]","[1]"],
-      "stdout": ["7,0,8\n","0\n","8,9,9,9,0,0,0,1\n","0,0,1\n","0,0,0,1\n"]
+      "stdin": ["2\n4\n3\n5\n6\n4","0\n0","9\n9\n9\n9\n9\n9\n9\n9\n9\n9\n9\n9\n9","9\n9\n9\n1"],
+      "stdout": ["7,0,8\n","0\n","8,9,9,9,0,0,0,1\n","0,0,0,1\n"]
     },
     {
       "problemId": "3",
