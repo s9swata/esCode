@@ -1,7 +1,7 @@
 const Problems = [
     {
       "problemId": "1",
-      "title": "Two Sum",
+      "title": "1. Two Sum",
       "acceptance": "53.8%",
       "difficulty": "Easy",
       "description": "Given an array of integers nums and an integer target, return indices of the two numbers such that they add up to target. Use eval to pass the lists in python.",
@@ -11,12 +11,12 @@ const Problems = [
         { "input": "nums = [3,3], target = 6", "output": "[0,1]" }
       ],
       "sampleOutput": "For the input nums = [2,7,11,15] and target = 9, the function should return [0,1] because nums[0] + nums[1] == 9",
-      "stdin": [["[2,7,11,15]", "9"],["[-1,-2,-3,-4,1]", "-5"],["[3,3]", "6"], ["[1,2,3,4]","10"], ["[1000000,500000,250000]", "1500000"]],
-      "stdout": ["[0, 1]\n", "[1, 3]\n", "[0, 1]\n", "[]\n", "[0, 1]\n"]
+      "stdin": ["2\n7\n11\n15\n9","-1\n-2\n-3\n-4\n1\n-5","3\n3\n6","1\n2\n3\n4\n10","1000000\n500000\n250000\n1500000"],
+      "stdout": ["0, 1\n", "1, 3\n", "0, 1\n", "\n", "0, 1\n"]
     },
     {
       "problemId": "2",
-      "title": "Add Two Numbers",
+      "title": "2. Add Two Numbers",
       "acceptance": "44.2%",
       "difficulty": "Medium",
       "description": "You are given two non-empty linked lists representing two non-negative integers. The digits are stored in reverse order, and each of their nodes contains a single digit. Add the two numbers and return the sum as a linked list.",
@@ -26,12 +26,12 @@ const Problems = [
         { "input": "L1 = [9,9,9,9], L2 = [9,9,9,9,9,9,9]", "output": "[8,9,9,9,0,0,0,1]" }
       ],
       "sampleOutput": "For the input l1 = [2,4,3] and l2 = [5,6,4], the function should return [7,0,8] because 342 + 465 = 807",
-      "stdin": [["[2,4,3]", "[5,6,4]"],["[0]","[0]"],["[9,9,9,9]","[9,9,9,9,9,9,9]"],["[9,9]","[1]"],["[9,9,9]","[1]"]],
-      "stdout": ["[7, 0, 8]\n","[0]\n","[8, 9, 9, 9, 0, 0, 0, 1]\n","[0, 0, 1]\n","[0, 0, 0, 1]\n"]
+      "stdin": ["2\n4\n3\n5\n6\n4","0\n0","9\n9\n9\n9\n9\n9\n9\n9\n9\n9\n9\n9\n9","[1]"],["[9,9,9]","[1]"],
+      "stdout": ["[7, 0, 8]\n","[0]n","[8, 9, 9, 9, 0, 0, 0, 1]\n","[0, 0, 1]\n","[0, 0, 0, 1]\n"]
     },
     {
       "problemId": "3",
-      "title": "Longest Substring Without Repeating Characters",
+      "title": "3. Longest Substring Without Repeating Characters",
       "acceptance": "33.8%",
       "difficulty": "Medium",
       "description": "Given a string s, find the length of the longest substring without repeating characters.",
@@ -46,7 +46,7 @@ const Problems = [
     },
     {
       "problemId": "4",
-      "title": "Median of Two Sorted Arrays",
+      "title": "4. Median of Two Sorted Arrays",
       "acceptance": "41.5%",
       "difficulty": "Hard",
       "description": "Given two sorted arrays nums1 and nums2 of size m and n respectively, return the median of the two sorted arrays. Print upto 2 decimal places",
@@ -61,7 +61,7 @@ const Problems = [
     },
     {
       "problemId": "5",
-      "title": "Longest Palindromic Substring",
+      "title": "5. Longest Palindromic Substring",
       "acceptance": "41.5%",
       "difficulty": "Medium",
       "description": "Given a string s, return the longest palindromic substring in s.",
@@ -76,7 +76,7 @@ const Problems = [
     },
     {
       "problemId": "6",
-      "title": "ZigZag Conversion",
+      "title": "6. ZigZag Conversion",
       "acceptance": "53.8%",
       "difficulty": "Medium",
       "description": "The string 'PAYPALISHIRING' is written in a zigzag pattern on a given number of rows like this: (you may want to display this pattern in a fixed font for better legibility)",
@@ -91,7 +91,7 @@ const Problems = [
     },
     {
       "problemId": "7",
-      "title": "Reverse Integer",
+      "title": "7. Reverse Integer",
       "acceptance": "28.1%",
       "difficulty": "Medium",
       "description": "Given a signed 32-bit integer x, return x with its digits reversed. If reversing x causes the value to go outside the signed 32-bit integer range [-2^31, 2^31 - 1], then return 0.",
@@ -106,7 +106,7 @@ const Problems = [
     },
     {
       "problemId": "8",
-      "title": "String to Integer (atoi)",
+      "title": "8. String to Integer (atoi)",
       "acceptance": "16.6%",
       "difficulty": "Medium",
       "description": "Implement the myAtoi(string s) function, which converts a string to a 32-bit signed integer (similar to C/C++'s atoi function).",
@@ -121,7 +121,7 @@ const Problems = [
     },
     {
       "problemId": "9",
-      "title": "Palindrome Number",
+      "title": "9. Palindrome Number",
       "acceptance": "55.3%",
       "difficulty": "Easy",
       "description": "Given an integer x, return x if x is palindrome integer. An integer is a palindrome when it reads the same backward as forward.",
@@ -136,7 +136,7 @@ const Problems = [
     },
     {
       "problemId": "10",
-      "title": "Regular Expression Matching",
+      "title": "10. Regular Expression Matching",
       "acceptance": "44.2%",
       "difficulty": "Hard",
       "description": "Given an input string s and a pattern p, implement regular expression matching with support for '.' and '*' where: '.' Matches any single character. '*' Matches zero or more of the preceding element.",
@@ -151,7 +151,7 @@ const Problems = [
     },
     {
       "problemId": "11",
-      "title": "Add Two Numbers",
+      "title": "11. Add Two Numbers(for testing, don't attmept)",
       "acceptance": "44.2%",
       "difficulty": "Hard",
       "description": "Add two numbers",
