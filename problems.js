@@ -148,6 +148,19 @@ const Problems = [
       "sampleOutput": "For the input s = 'aa' and p = 'a*', the function should return true because '*' means zero or more of the preceding element, 'a'. Therefore, by repeating 'a' once, it becomes 'aa'",
       "stdin": [['aa', 'a'], ['aa', 'a*'], ['ab', '.*']],
       "stdout": ['False\n', 'True\n', 'True\n']
+    },
+    {
+      "problemId": "11",
+      "title": "Add Two Numbers",
+      "acceptance": "44.2%",
+      "difficulty": "Hard",
+      "description": "Add two numbers",
+      "testCases": [
+        { "input": "3,5", "output": "8" }
+      ],
+      "sampleOutput": "sample output",
+      "stdin": ["3\n5", "23\n32", "56\n67"],
+      "stdout": ['8\n', '55\n', '123\n']
     }
   ];
 

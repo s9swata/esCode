@@ -114,7 +114,7 @@ app.post('/submission', auth, async (req, res) => {
 
     SUBMISSIONS.push(JSON.stringify({
         problemId,
-        code,
+        code: code,
         testCasesPassed,
         time: new Date()
     }))
@@ -122,6 +122,78 @@ app.post('/submission', auth, async (req, res) => {
     return res.json({failedCases: failedCases});
 
 });
+
+app.post('/submission/cpp', auth, async (req, res) => {
+    const source_code = req.body.submission;
+    const problemId = req.body.problemId;
+
+    const problem = PROBLEMS.find(problem => problem.problemId === problemId);
+    if(!problem){
+        return res.json({msg: "No such problem"});
+    }
+
+    const inputs = problem.stdin;
+
+    let testCasesPassed = 0;
+    let failedCases = [];
+
+    for(let i = 0; i < inputs.length; i++){
+        const stdin = inputs[i];
+        const expected_output = problem.stdout[i];
+
+        const token = await fetch('http://13.56.177.109:2358/submissions?base64_encoded=false&wait-false', {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                source_code: source_code,
+                stdin: stdin,
+                language_id: 53
+            })
+        })
+
+        console.log('request submitted');
+
+        const result = await token.json();
+        console.log(result.token)
+
+        let statusId = 0;
+        let RESPONSE = "";
+        while(statusId < 3){
+            const webhook = await fetch(`http://13.56.177.109:2358/submissions/${result.token}?base64_encoded=false&fields=stdout,stderr,status_id,language_id`, {
+                method: "GET",
+            })
+            const webhookJSON = await webhook.json()
+            console.log(webhookJSON);
+            const status_id = webhookJSON.status_id;
+            console.log(status_id);
+            statusId = status_id;
+            RESPONSE = webhookJSON;
+            
+    }
+    
+        const stdout = RESPONSE.stdout;
+        console.log(stdout)
+        if(stdout === expected_output){
+            testCasesPassed++
+        }else{
+            failedCases.push(i);
+            console.log(`Test case ${i+1} failed`);
+        }
+    }
+    console.log(testCasesPassed);
+
+    SUBMISSIONS.push(JSON.stringify({
+        problemId,
+        code: source_code,
+        testCasesPassed,
+        time: new Date()
+    }))
+    
+    return res.json({failedCases: failedCases});
+
+})
 
 app.get('/submissions/:problemId', auth, (req, res) => {
     const { problemId } = req.params;
