@@ -12,7 +12,7 @@ const Problems = [
       ],
       "sampleOutput": "For the input nums = [2,7,11,15] and target = 9, the function should return [0,1] because nums[0] + nums[1] == 9",
       "stdin": ["2\n7\n11\n15\n9","-1\n-2\n-3\n-4\n1\n-5","3\n3\n6","1\n2\n3\n4\n10","1000000\n500000\n250000\n1500000"],
-      "stdout": ["0, 1\n", "1, 3\n", "0, 1\n", "\n", "0, 1\n"]
+      "stdout": ["0,1\n", "1,3\n", "0,1\n", "\n", "0,1\n"]
     },
     {
       "problemId": "2",
@@ -27,7 +27,7 @@ const Problems = [
       ],
       "sampleOutput": "For the input l1 = [2,4,3] and l2 = [5,6,4], the function should return [7,0,8] because 342 + 465 = 807",
       "stdin": ["2\n4\n3\n5\n6\n4","0\n0","9\n9\n9\n9\n9\n9\n9\n9\n9\n9\n9\n9\n9","[1]"],["[9,9,9]","[1]"],
-      "stdout": ["[7, 0, 8]\n","[0]n","[8, 9, 9, 9, 0, 0, 0, 1]\n","[0, 0, 1]\n","[0, 0, 0, 1]\n"]
+      "stdout": ["7,0,8\n","0\n","8,9,9,9,0,0,0,1\n","0,0,1\n","0,0,0,1\n"]
     },
     {
       "problemId": "3",
@@ -41,7 +41,7 @@ const Problems = [
         { "input": "s = 'pwwkew'", "output": "3" }
       ],
       "sampleOutput": "For the input s = 'abcabcbb', the function should return 3 because the longest substring without repeating characters is 'abc'",
-      "stdin": [['abcabcbb'],['bbbb'],['pwwkew'],['aaaaaa'],['abcABC!@#']],
+      "stdin": ['abcabcbb','bbbb','pwwkew','aaaaaa','abcABC!@#'],
       "stdout": ['3\n','1\n','3\n','1\n','9\n']
     },
     {
@@ -56,7 +56,7 @@ const Problems = [
         { "input": "nums1 = [0,0], nums2 = [0,0]", "output": "0.00000" }
       ],
       "sampleOutput": "For the input nums1 = [1,3] and nums2 = [2], the function should return 2.00000 because the median of the combined sorted array [1,2,3] is 2",
-      "stdin": [["[1,3]","[2]"], ["[1,2]","[3,4]"], ["[0,0]","[0,0]"], ["[1]","[2]"], ["[1,2,3]","[100,200,300]"]],
+      "stdin": ["1\n3\n2", "1\n2\n3\n4", "0\n0\n0\n0", "1\n2", "1\n2\n3\n100\n200\n300"],
       "stdout": ["2.00\n", "2.50\n", "0.00\n", "1.50\n", "51.50\n"]
     },
     {
@@ -71,7 +71,7 @@ const Problems = [
         { "input": "s = 'a'", "output": "a" }
       ],
       "sampleOutput": "For the input s = 'babad', the function should return 'bab' (or 'aba') as it is the longest palindromic substring",
-      "stdin": [['babad'], ['cbbd'], ['a'], ['abcde'], ['racecar']],
+      "stdin": ['babad', 'cbbd', 'a', 'abcde', 'racecar'],
       "stdout": ['bab\n', 'bb\n', 'a\n', 'a\n', 'racecar\n']
     },
     {
@@ -86,7 +86,7 @@ const Problems = [
         { "input": "s = 'A', numRows = 1", "output": "'A'" }
       ],
       "sampleOutput": "For the input s = 'PAYPALISHIRING' and numRows = 3, the function should return 'PAHNAPLSIIGYIR'",
-      "stdin": [['PAYPALISHIRING', '3'], ['PAYPALISHIRING', '4'], ['A', '1']],
+      "stdin": ['PAYPALISHIRING\n3', 'PAYPALISHIRING\n4', 'A\n1'],
       "stdout": ['PAHNAPLSIIGYIR\n', 'PINALSIGYAHRPI\n', 'A\n']
     },
     {
@@ -101,7 +101,7 @@ const Problems = [
         { "input": "x = 120", "output": "21" }
       ],
       "sampleOutput": "For the input x = 123, the function should return 321",
-      "stdin": [['123'], ['-123'], ['120'], ['1534236469'], ['0']],
+      "stdin": ['123', '-123', '120', '1534236469', '0'],
       "stdout": ['321\n', '-321\n', '21\n', '0\n', '0\n']
     },
     {
@@ -116,7 +116,7 @@ const Problems = [
         { "input": "s = '4193 with words'", "output": "4193" }
       ],
       "sampleOutput": "For the input s = '42', the function should return 42",
-      "stdin": [['42'], ['   -42'], ['4193 with words']],
+      "stdin": ['42', '   -42', '4193 with words'],
       "stdout": ["42\n", "-42\n", "4193\n"]
     },
     {
@@ -131,7 +131,7 @@ const Problems = [
         { "input": "x = 10", "output": "false" }
       ],
       "sampleOutput": "For the input x = 121, the function should return true because 121 reads as 121 from left to right and from right to left",
-      "stdin": [['121'], ['1230321'], ['123'], ['4554'], ['-11']],
+      "stdin": ['121', '1230321', '123', '4554', '-11'],
       "stdout": ['121\n', '1230321\n', '\n', '4554\n', '\n']
     },
     {
@@ -146,7 +146,7 @@ const Problems = [
         { "input": "s = 'ab', p = '.*'", "output": "true" }
       ],
       "sampleOutput": "For the input s = 'aa' and p = 'a*', the function should return true because '*' means zero or more of the preceding element, 'a'. Therefore, by repeating 'a' once, it becomes 'aa'",
-      "stdin": [['aa', 'a'], ['aa', 'a*'], ['ab', '.*']],
+      "stdin": ["aa\na", "aa\na*", "ab\n.*"],
       "stdout": ['False\n', 'True\n', 'True\n']
     },
     {
