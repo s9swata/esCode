@@ -11,7 +11,7 @@ const Problems = [
         { "input": "nums = [3,3], target = 6", "output": "[0,1]" }
       ],
       "sampleOutput": "For the input nums = [2,7,11,15] and target = 9, the function should return [0,1] because nums[0] + nums[1] == 9",
-      "stdin": ["2\n7\n11\n15\n9","-1\n-2\n-3\n-4\n1\n-5","3\n3\n6","1\n2\n3\n4\n10","1000000\n500000\n250000\n1500000"],
+      "stdin": ["4\n2\n7\n11\n15\n9","3\n-1\n-2\n-3\n-4\n1\n-5","2\n3\n3\n6","4\n1\n2\n3\n4\n10","3\n1000000\n500000\n250000\n1500000"],
       "stdout": ["0,1\n", "1,3\n", "0,1\n", "\n", "0,1\n"]
     },
     {
@@ -26,7 +26,7 @@ const Problems = [
         { "input": "L1 = [9,9,9,9], L2 = [9,9,9,9,9,9,9]", "output": "[8,9,9,9,0,0,0,1]" }
       ],
       "sampleOutput": "For the input l1 = [2,4,3] and l2 = [5,6,4], the function should return [7,0,8] because 342 + 465 = 807",
-      "stdin": ["2\n4\n3\n5\n6\n4","0\n0","9\n9\n9\n9\n9\n9\n9\n9\n9\n9\n9\n9\n9","9\n9\n9\n1"],
+      "stdin": ["3\n2\n4\n3\n3\n5\n6\n4","1\n0\n1\n0","4\n9\n9\n9\n9\n7\n9\n9\n9\n9\n9\n9\n9\n9\n9","9\n9\n9\n1"],
       "stdout": ["7,0,8\n","0\n","8,9,9,9,0,0,0,1\n","0,0,0,1\n"]
     },
     {
@@ -56,7 +56,7 @@ const Problems = [
         { "input": "nums1 = [0,0], nums2 = [0,0]", "output": "0.00000" }
       ],
       "sampleOutput": "For the input nums1 = [1,3] and nums2 = [2], the function should return 2.00000 because the median of the combined sorted array [1,2,3] is 2",
-      "stdin": ["1\n3\n2", "1\n2\n3\n4", "0\n0\n0\n0", "1\n2", "1\n2\n3\n100\n200\n300"],
+      "stdin": ["2\n1\n3\n1\n2", "2\n1\n2\n2\n3\n4", "2\n0\n0\n2\n0\n0", "1\n1\n1\n2", "3\n1\n100\n200\n3\n2\n3\n300"],
       "stdout": ["2.00\n", "2.50\n", "0.00\n", "1.50\n", "51.50\n"]
     },
     {
