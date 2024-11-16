@@ -210,7 +210,7 @@ app.get('/discuss/all', async(req, res) => {
 
 app.get('/leaderboard', async(req, res) => {
     try{
-        const leaderboard = await AURA.find({});
+        const leaderboard = await AURA.find().sort({aura: -1});
         return res.send(leaderboard);
     }catch(e){
         return res.status(400).json({error: e});
