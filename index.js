@@ -166,7 +166,7 @@ app.post('/submission/cpp', jwtCheck, async (req, res) => {
 app.get('/submissions/:username', jwtCheck, (req, res) => {
     const { username } = req.params;
     const submissions = SUBMISSIONS.find({username: username}) 
-    return res.json({ submissions });
+    return res.send(submissions);
 });
 
 app.get('/submissions', async (req, res) => {
