@@ -119,7 +119,8 @@ app.post('/submission/cpp', jwtCheck, async (req, res) => {
     }
     
         const stdout = RESPONSE.stdout;
-        console.log(stdout)
+        console.log(stdout);
+        console.log(expected_output);
         if(stdout === expected_output){
             testCasesPassed++
         }else{
