@@ -163,15 +163,24 @@ app.post('/submission/cpp', jwtCheck, async (req, res) => {
 
 })
 
-app.get('/submissions/:username', jwtCheck, (req, res) => {
-    const { username } = req.params;
-    const submissions = SUBMISSIONS.find({username: username}) 
-    return res.send(submissions);
+app.get('/submissions/:username', jwtCheck, async (req, res) => {
+    try{
+        const { username } = req.params;
+        const submissions = await SUBMISSIONS.find({username: username}) 
+        return res.send(submissions);
+    }catch(e){
+        return res.status(400).json({error: e})
+    }
+    
 });
 
 app.get('/submissions', async (req, res) => {
-    const allSubmissions = await SUBMISSIONS.find({});
-    res.send(allSubmissions);
+    try{
+        const allSubmissions = await SUBMISSIONS.find({});
+        return res.send(allSubmissions);
+    }catch(e){
+        return res.status(400).json({error: e});
+    }
 })
 
 app.get('/aura/:username', async (req, res) => {
