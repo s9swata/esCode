@@ -28,6 +28,10 @@ const SubmissionSchema = new mongoose.Schema(
       enum: ["pending", "accepted", "failed"],
       default: "pending",
     },
+    token: {
+      type: String,
+      required: true,
+    },
   },
   {
     timestamps: true,
