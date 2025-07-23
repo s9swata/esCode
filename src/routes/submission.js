@@ -1,5 +1,6 @@
 const express = require("express");
 const Submissions = require("../models/Submissions");
+const { submitCode } = require("../utils");
 const router = express.Router();
 
 router.get("/", async (req, res) => {
@@ -12,7 +13,7 @@ router.get("/", async (req, res) => {
 });
 
 router.post("/", async (req, res) => {
-  const { username, source_code, problem_id, language_id } = req.body;
+  const { username, source_code, problem_id, language_id, stdin } = req.body;
   try {
     const submission = await Submissions.create({
       username,
@@ -24,8 +25,9 @@ router.post("/", async (req, res) => {
     });
     console.log("Submission created successfully", submission);
 
-    // #TODO: Add judge0 api call here to evaluate the submission
-    res.status(200).json({ msg: "Submission created" });
+    const token = submitCode(language_id, source_code, stdin);
+    if (token) res.status(200).json({ msg: "Submission created" });
+    else res.status(400).json({ msg: "Error while submitting request" });
   } catch (e) {
     console.log("Error creating submission", e);
     res.status(400).json({ msg: "Error while submitting request" });

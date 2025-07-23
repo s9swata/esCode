@@ -42,4 +42,34 @@ router.post("/clerk/registered", async (req, res) => {
   }
 });
 
+router.put("/judge", async (req, res) => {
+  const token = req.body.token;
+  try {
+    const checkSubmissionInDb = await Submissions.findOne({
+      token: token,
+    });
+    if (!checkSubmissionInDb) {
+      console.log(`Submission with token ${token} not found in db`);
+      return;
+    }
+    const status = req.body.status;
+    if (status.description === "Accepted") {
+      await Submissions.updateOne(
+        { token: token },
+        { $set: { status: "accepted" } },
+      );
+      console.log(`Submission with token ${token} marked as accepted`);
+    } else {
+      await Submissions.updateOne(
+        { token: token },
+        { $set: { status: "rejected" } },
+      );
+      console.log(`Submission with token ${token} marked as rejected`);
+    }
+  } catch (e) {
+    console.log(`Error updating submission status with token ${token}: ${e}`);
+    return;
+  }
+});
+
 module.exports = router;
