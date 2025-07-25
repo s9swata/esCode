@@ -2,6 +2,8 @@ const express = require("express");
 const router = express.Router();
 
 const User = require("../models/User");
+const Submissions = require("../models/Submissions");
+const Aura = require("../models/Aura");
 
 router.post("/clerk/registered", async (req, res) => {
   const userData = req.body.data;
@@ -52,19 +54,27 @@ router.put("/judge", async (req, res) => {
       console.log(`Submission with token ${token} not found in db`);
       return;
     }
+    if (checkSubmissionInDb && checkSubmissionInDb.status === "accepted") {
+      console.log(`Submission with token ${token} already marked as accepted`);
+      return;
+    }
     const status = req.body.status;
     if (status.description === "Accepted") {
       await Submissions.updateOne(
         { token: token },
         { $set: { status: "accepted" } },
       );
+      await Aura.updateOne(
+        { username: checkSubmissionInDb.username },
+        { $inc: { aura: 1 } },
+      );
       console.log(`Submission with token ${token} marked as accepted`);
     } else {
       await Submissions.updateOne(
         { token: token },
-        { $set: { status: "rejected" } },
+        { $set: { status: "failed" } },
       );
-      console.log(`Submission with token ${token} marked as rejected`);
+      console.log(`Submission with token ${token} marked as failed`);
     }
   } catch (e) {
     console.log(`Error updating submission status with token ${token}: ${e}`);

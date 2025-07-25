@@ -3,7 +3,6 @@ const axios = require("axios");
 
 const X_RAPIDAPI_KEY = process.env.X_RAPIDAPI_KEY;
 const X_RAPIDAPI_HOST = process.env.X_RAPIDAPI_HOST;
-const CALLBACK_URL = process.env.CALLBACK_URL;
 
 async function connectToDb(connectionString) {
   try {
@@ -16,8 +15,8 @@ async function connectToDb(connectionString) {
   }
 }
 
-async function submitCode(language_id, source_code, stdin) {
-  if (!X_RAPIDAPI_KEY || !X_RAPIDAPI_HOST || !CALLBACK_URL) {
+async function submitCode(language_id, source_code, stdin, callback_url) {
+  if (!X_RAPIDAPI_KEY || !X_RAPIDAPI_HOST) {
     throw new Error("Missing RapidAPI credentials");
   }
 
@@ -38,7 +37,7 @@ async function submitCode(language_id, source_code, stdin) {
       language_id,
       source_code,
       stdin,
-      callback_url: CALLBACK_URL,
+      callback_url,
     },
   };
 

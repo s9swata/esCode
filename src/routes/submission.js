@@ -13,8 +13,26 @@ router.get("/", async (req, res) => {
 });
 
 router.post("/", async (req, res) => {
-  const { username, source_code, problem_id, language_id, stdin } = req.body;
+  const {
+    username,
+    source_code,
+    problem_id,
+    language_id,
+    stdin,
+    callback_url,
+  } = req.body;
   try {
+    if (
+      !username ||
+      !source_code ||
+      !problem_id ||
+      !language_id ||
+      !stdin ||
+      !callback_url
+    ) {
+      res.status(400).json({ msg: "Missing required fields" });
+      return;
+    }
     const submission = await Submissions.create({
       username,
       source_code,
@@ -25,9 +43,21 @@ router.post("/", async (req, res) => {
     });
     console.log("Submission created successfully", submission);
 
-    const token = submitCode(language_id, source_code, stdin);
-    if (token) res.status(200).json({ msg: "Submission created" });
-    else res.status(400).json({ msg: "Error while submitting request" });
+    const response = await submitCode(
+      language_id,
+      source_code,
+      stdin,
+      callback_url,
+    );
+    console.log(response);
+    if (response.token) {
+      await Submissions.updateOne(
+        { _id: submission._id },
+        { $set: { token: response.token } },
+      );
+      console.log("Token updated in submission", response.token);
+      res.status(200).json({ msg: "Submission created" });
+    } else res.status(400).json({ msg: "Error while submitting request" });
   } catch (e) {
     console.log("Error creating submission", e);
     res.status(400).json({ msg: "Error while submitting request" });

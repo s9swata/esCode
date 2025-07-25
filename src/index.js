@@ -17,7 +17,8 @@ const utils = require("./utils");
 const auraRouter = require("./routes/aura");
 const discussRouter = require("./routes/discussion");
 const webhookRouter = require("./routes/webhook");
-const subsmissionsRouter = require("./routes/submission");
+const submissionsRouter = require("./routes/submission");
+const authMiddleware = require("./middleware/auth");
 
 let connectionString = process.env.DATABASE_URL;
 
@@ -29,10 +30,10 @@ app.get("/", (req, res) => {
   res.status(200).send("Welcome to the esCode API");
 });
 
-app.use("/aura", auraRouter);
-app.use("/discuss", discussRouter);
+app.use("/aura", authMiddleware, auraRouter);
+app.use("/discuss", authMiddleware, discussRouter);
 app.use("/webhook", webhookRouter);
-app.use("/submissions", subsmissionsRouter);
+app.use("/submissions", authMiddleware, submissionsRouter);
 
 utils.connectToDb(connectionString).then(() => {
   app.listen(PORT, () => {
